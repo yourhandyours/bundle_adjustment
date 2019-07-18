@@ -2,7 +2,7 @@
 // (Biologically Inspired Mobile Robot Laboratory, Robotics Institute, Beihang University)
 
 #include <bundle_adjustment.h>
-#include <opencv4/opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include <Eigen/Dense>
 #include <Eigen/Core>
 
