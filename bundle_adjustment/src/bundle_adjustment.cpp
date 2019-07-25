@@ -103,10 +103,14 @@ void BundleAdjustment::optimize()
     const double tau = 1e-8;
 
     // compute A and g
+    // H * delatX = b
+    // JJ * delatX = -J * f(x)
+    // b = -J * f(x)
     computeHAndbAndError();
 	last_sum_error2_ = sum_error2_;
 	
     // found.
+    // if total error is smaller specified min_error_
     bool found = ( ( -b_ ).lpNorm<Eigen::Infinity>() < min_error_ );
 	
     //mu
@@ -127,9 +131,12 @@ void BundleAdjustment::optimize()
         niter ++; // add iter
 
         // Solve the normal equaltion.
+        // LM --> H = (H + mu*I)
         H_ += mu * I_;
+        // Solve Xc and Xp
         solveNormalEquation();
 
+        // Delta_X_ is total error    
         double delta = Delta_X_.norm(); // check if the step size.
 
 		if ( delta < min_delta_ ) {
